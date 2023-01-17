@@ -1,0 +1,3 @@
+-Chercher le rôle de aria-current
+-utilise les classes pour le css
+- importer font-poppins de google fonts
