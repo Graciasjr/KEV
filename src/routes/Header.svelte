@@ -1,11 +1,59 @@
 <script>
 	import { page } from '$app/stores';
-	// import TiAdjustBrightness from 'svelte-icons/ti/TiAdjustBrightness.svelte'
-	// import TiAdjustContrast from 'svelte-icons/ti/TiAdjustContrast.svelte'
+	import { onMount } from 'svelte';
+
+	$:linkActived =
+	{
+		sante:"",
+		cuisine:"",
+		chretiennete:""
+	}
+	$:currentPathName = ""
+
+	async function getCurrentPathName()
+	{
+		setTimeout(
+			async()=>
+			{
+				currentPathName = await $page.url.pathname;
+				switch (currentPathName) {
+					case "/sante":
+						linkActived.sante=true;
+						linkActived.cuisine =! linkActived.sante;
+						linkActived.chretiennete =!linkActived.sante;
+						break;
+
+					case "/cuisine":
+						linkActived.cuisine = true;
+						linkActived.chretiennete =!linkActived.cuisine;
+						linkActived.sante =!linkActived.cuisine;
+
+						break;
+
+					case "/chretiennete":
+						linkActived.chretiennete = true;
+						linkActived.sante =!linkActived.chretiennete;
+						linkActived.cuisine =!linkActived.chretiennete;
+						break;
+
+					default:
+						linkActived.sante=true;
+						linkActived.cuisine =! linkActived.sante
+						linkActived.chretiennete =!linkActived.sante;
+					break;	
+				
+				}
+
+			},
+			100
+		)
+	}
+
+	
+	
 </script>
 
 <header>
-
 	<nav>
 		<div class="logo-content">
 			<span class="logo">KEV</span>
@@ -19,9 +67,9 @@
 			</button>
 
 			<span class="navlinks">
-				<a href="/sante" class="sante" aria-label="La Page Santé" aria-current="page">Santé</a>
-				<a href="/cuisine" class="cuisine" aria-label="La Page Cuisine" aria-current="page">Cuisine</a>
-				<a href="/spiritualite" class="sante" aria-label="La Page Spiritualité" aria-current="page">Spiritualité</a>
+				<a href="{"/"?"/sante":""}" class="sante {linkActived.sante?"links-active":""} " aria-label="La Page Santé" aria-current="page" on:click={()=>{getCurrentPathName()}}>Santé</a>
+				<a href="/cuisine" class="cuisine {linkActived.cuisine?"links-active":""}" aria-label="La Page Cuisine" aria-current="{$page.url.pathname ==="cuisine"?"page":"undefined"}" on:click={()=>{getCurrentPathName()}}>Cuisine</a>
+				<a href="/chretiennete" class="sante {linkActived.chretiennete?"links-active":""}" aria-label="La Page Chretienneté" aria-current="{$page.url.pathname ==="chretiennete"?"page":"undefined"}" on:click={()=>{getCurrentPathName()}}>Chrétienneté</a>
 			</span>
 		</div>
 
@@ -31,8 +79,7 @@
 					<span class="sliders"></span>
 				</label>			
 		</div>
-	</nav>	
-	
+	</nav>		
 </header>
 
 
@@ -43,7 +90,8 @@
 	nav
 	{
 		width: 100%;
-		position: fixed;
+		position:fixed;
+		top:0;
 		background: #ffff;
 		display: flex;
 		padding: 7px 30px;
@@ -74,9 +122,16 @@
 	{
 		font-size: 14px;
 		text-decoration: none;
-		color: #9f9f9f;
+		color: #7c7c7c;
 		margin-right: 50px;
 		position: relative;
+	}
+
+	a.links-active
+	{
+		font-size: 16px;
+		font-weight:bold;
+		transition: font-size 0.3s ease-out;
 	}
 	
 	.navlinks a::after
