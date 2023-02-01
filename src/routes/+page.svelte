@@ -4,8 +4,15 @@
 	import Cuisine from "./cuisine/+page.svelte";
 	import Chretiennete from "./chretiennete/+page.svelte";
 
-
-	$:currentPage = $page.url.pathname;
+	// setTimeout(
+		// async()=>
+		// {
+			// $page.url.pathname === '/'?redirect(302, "/sante"):'';
+			// console.log(data);
+			
+		// },1000
+	// )
+	
 </script>
 
 <svelte:head>
@@ -14,6 +21,7 @@
 </svelte:head>
 
 <section>
+	
 	<!-- {#if currentPage === "sante"}
 		<Sante></Sante>
 	{:else if currentPage === "cuisine"}

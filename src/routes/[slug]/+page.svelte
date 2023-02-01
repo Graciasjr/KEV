@@ -1,17 +1,16 @@
 <script>
-   import {page} from '$app/stores';
+   export let data 
 
-   let slottt = $page;
-   console.log(slottt.params)
-
+   console.log(data);
 
 
 </script>
 
-
 <section>
    <header>
+
       <h1>
+         
          17 Insanely Actionnable List Building Strategies That Will Genenrate
          More Subscribers today.
       </h1>

@@ -6,3 +6,11 @@
 -utiliser un AI API pour la générations automatique d'images illustatif
     exemple:
     * rudalle/kandinski
+
+- créer un route "admin" dans lequel aurait les rôles suivant
+    * editer ses blog avec blog visualiser
+    * s'authentifier avec google
+    * visualiser tout les blog publié
+
+
+- ne pas oublier de mettre ce fichier dans le .gitignore

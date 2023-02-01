@@ -49,7 +49,19 @@
 		)
 	}
 
-	
+	const adminResquest = async() =>
+	{
+		setTimeout(
+			()=>
+			{
+				($page.url.pathname ==="/admin")?"":"";
+			},
+			100
+		)
+	}
+
+	// console.log($page.url);
+	adminResquest()
 	
 </script>
 

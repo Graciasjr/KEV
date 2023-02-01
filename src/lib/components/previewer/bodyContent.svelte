@@ -16,7 +16,7 @@
                 <h1>{article.title}</h1>
             </span>
             <div class="footer">
-                <a href="/{article.articleNature}/{article.id}" class="read-article-link">Lire</a>
+                <a href="/{article.id}" class="read-article-link">Lire</a>
                 <span class="date">{article.date}</span>
             </div>
         </div> 

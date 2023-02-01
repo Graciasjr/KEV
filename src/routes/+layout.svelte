@@ -1,10 +1,9 @@
 <script>
-		import {page} from '$app/stores';
+		// import {page} from '$app/stores';
 		import './styles.css';
 		import './Header.svelte'
 		import Header from './Header.svelte';
-
-		console.log($page.url)
+		export let data;
 </script>
 
 <div class="app">
