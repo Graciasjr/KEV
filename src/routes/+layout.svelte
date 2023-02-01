@@ -1,9 +1,7 @@
 <script>
-		// import {page} from '$app/stores';
 		import './styles.css';
 		import './Header.svelte'
 		import Header from './Header.svelte';
-		export let data;
 </script>
 
 <div class="app">

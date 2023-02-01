@@ -1,11 +1,11 @@
 export function load ({params})
 {
     // console.log(params.slug);
-    const slugs = params.slugs
+    const slugss = params.slug
 
     return
     {
-        slugs
+        slugss
     }
 
 }

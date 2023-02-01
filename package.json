@@ -13,6 +13,7 @@
 		"@sveltejs/kit": "^1.0.0",
 		"mdsvex": "^0.10.6",
 		"svelte": "^3.54.0",
+		"svelte-preprocess": "^5.0.1",
 		"vite": "^4.0.0"
 	},
 	"type": "module",

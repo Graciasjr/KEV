@@ -1,6 +1,5 @@
 <script>
-   export let data 
-
+   export let data;
    console.log(data);
 
 
@@ -139,8 +138,5 @@
       position: relative;
       left: 5%;
    }
-   li
-   {
-      /* border: 1px solid; */
-   }
+   
 </style>
