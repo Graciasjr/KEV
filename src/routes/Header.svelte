@@ -56,7 +56,7 @@
 			{
 				($page.url.pathname ==="/admin")?"":"";
 			},
-			100
+			1000
 		)
 	}
 
@@ -71,6 +71,7 @@
 			<span class="logo">KEV</span>
 		</div>
 
+		{#if $page.url.pathname ==="/" || $page.url.pathname === "/sante" || $page.url.pathname === "/cuisine" || $page.url.pathname === "/chretiennete"  }	
 		<div class="navlinks-container">
 			<button class="hamburger" aria-label="Voir le menu">
 				<span></span>
@@ -84,7 +85,19 @@
 				<a href="/chretiennete" class="sante {linkActived.chretiennete?"links-active":""}" aria-label="La Page Chretienneté" aria-current="{$page.url.pathname ==="chretiennete"?"page":"undefined"}" on:click={()=>{getCurrentPathName()}}>Chrétienneté</a>
 			</span>
 		</div>
+		{:else if $page.url.pathname === '/admin'}
+			<div class="navlinks-container">
+				<button class="hamburger" aria-label="Voir le menu">
+					<span></span>
+					<span></span>
+					<span></span>
+				</button>
 
+				<span class="navlinks">
+					<!-- <a href="" class="sante {linkActived.sante?"links-active":""} " aria-label="La Page Santé" aria-current="page" on:click={()=>{getCurrentPathName()}}>Mes Posts</a> -->
+				</span>
+			</div>
+		{/if}
 		<div class="site-theme">		
 				<input type="checkbox" id="check" class="checkbox">	
 				<label for="check">
@@ -106,7 +119,7 @@
 		top:0;
 		background: #ffff;
 		display: flex;
-		padding: 7px 30px;
+		padding: 7px 37px;
 		box-shadow: inset 0px -1px 1px #c4c4c4;
 		font-family: sans-serif;
 	}

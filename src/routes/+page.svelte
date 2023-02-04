@@ -1,17 +1,7 @@
 <script>
-	import { page } from "$app/stores";
 	import Sante from "./sante/+page.svelte";
 	import Cuisine from "./cuisine/+page.svelte";
 	import Chretiennete from "./chretiennete/+page.svelte";
-
-	// setTimeout(
-		// async()=>
-		// {
-			// $page.url.pathname === '/'?redirect(302, "/sante"):'';
-			// console.log(data);
-			
-		// },1000
-	// )
 	
 </script>
 
