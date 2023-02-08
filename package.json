@@ -18,6 +18,8 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@fortawesome/free-brands-svg-icons": "^6.2.1",
+		"@fortawesome/free-solid-svg-icons": "^6.2.1",
 		"isomorphic-dompurify": "^0.26.0",
 		"marked": "^4.2.12",
 		"pocketbase": "^0.10.0",
