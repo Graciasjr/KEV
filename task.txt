@@ -1,16 +1,16 @@
 -Chercher le rôle de aria-current(fait)
 -utilise les classes pour le css(fait)
 -fait du lazy loading quand les données sont introuvables(undefined)
-- changer la couleur du surlignage quand le text est sélectionné.
+- changer la couleur du surlignage quand le text est sélectionné()
 - importer font-poppins de google fonts
 -utiliser un AI API pour la générations automatique d'images illustatif
     exemple:
     * rudalle/kandinski
 
 - créer un route "admin" dans lequel aurait les rôles suivant
-    * editer ses blog avec blog visualiser
+    * editer ses blog avec blog visualiser(fait à 90%)
     * s'authentifier avec google
-    * visualiser tout les blog publié
+    * visualiser tout les blogs publié(fait à 70%)
 
 
 - ne pas oublier de mettre ce fichier dans le .gitignore

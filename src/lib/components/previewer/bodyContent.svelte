@@ -9,18 +9,16 @@
     {:then articles} 
         
     {#each articles as article}
-
-        <div class="article-card">
-            <span class="categorie">{article.categorie}</span>
+        <div class="article-card" style="background:hsl({article.randomColor}, 71%, 68%) ;">
+            <span class="categorie"><strong>{article.categorie}</strong></span>
             <span class="title">
-                <h1>{article.title}</h1>
+                {@html article.title}
             </span>
             <div class="footer">
                 <a href="/{article.id}" class="read-article-link">Lire</a>
                 <span class="date">{article.date}</span>
             </div>
-        </div> 
-
+        </div>
     {/each}
     {/await}
     
@@ -38,34 +36,31 @@
         flex-wrap:wrap;
         gap: 17px;
         padding: 1px 0;
+        /* border: 1px solid; */
     }
     .article-card
     {
-        /* border: 1px solid; */
         width: 250px;
         height: 197px;
         padding:15px 8px;
         display: flex;
         flex-direction: column;
-        background-color:hsla(199, 66%, 47%, 0.61);
+        gap: 7px;
         border-radius: 5px;
-        box-shadow: 1px 5px 7px #83828286;
+        box-shadow: 1px 5px 8px #83828286;
     }
 
     .categorie
     {
        font-size: 12px; 
-       color:#ffffffd7;
+       color:/*#ffffffd7*/#ffffffd2;
     }
 
     .title
     {
-        width: 70%;
+        width:95%;
         height:70%;
-        font-size: 16px;
-        margin-top: 2px;
-        margin-bottom:22px;
-        /* color: #fff; */
+        font-size: 14px;
     }
 
     
@@ -84,9 +79,9 @@
         text-decoration: none;
         font-size: 14px;
         font-weight: bold;
-        /* color: ; */
+        color:#1b4feb;
         padding: 5px 5px;
-        background: #fff;
+        background: #ffff;
         border-radius:3px;
         text-align: center;
         box-shadow: 0px 1px 17px #66656562;
@@ -94,16 +89,24 @@
 
     a.read-article-link:hover
     {
-        transform: scale(1.01);
-        transition: transform 0.3s ease-out;
+        animation: name duration timing-function delay iteration-count direction fill-mode;
+        animation: buttonAnimate 0.2s  ;
     }
 
+    @keyframes buttonAnimate{
+        from{
+            transform: rotate(-10deg);
+        }
+        to{
+            transform: rotate(10deg);
+        }
+    }
     .date
     {
         display:inline;
         font-size: 13px;
         font-weight:600;
-        color:#ffffffd7;
+        color:#fff/*#ffffffd7*/;
     }
 
 

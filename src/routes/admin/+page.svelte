@@ -1,48 +1,30 @@
 <script>
+    export let data;
     import HeaderContent from "$lib/components/previewer/headerContent.svelte";
     import BodyContent from "$lib/components/previewer/bodyContent.svelte";
     import Editor from "$lib/components/blogEditor/Editor.svelte";
-
-    let pageHeader =
-    {
-        rubriqueTitle:"Santé",
-        rubriqueDescription:"The latest and best healthy articles selected by our editorial office"
-    }
+  import { is_empty } from "svelte/internal";
     
-    let santeArticlesData =
-    [
+    let blogEditor = false;
+    $:ArticleDataFormatted = [];
+
+    setTimeout(
+        async()=>{
+        for(let post of data.posts.reverse())
         {
-            id:"dsfsdxdsf",
-            title:"Astuces pour prendre soin de son coeur éfficacement",
-            categorie:"Cardio",
-            illustrationImage:"",
-            randomColor:"83828286",
-            articleNature:"sante",
-            date:"01/01/2023"            
-        },
-        {
-            id:"dsfsdxdsf",
-            title:"Astuces pour prendre soin de son coeur éfficacement",
-            categorie:"Cardio",
-            illustrationImage:"",
-            randomColor:"83828286",
-            articleNature:"sante",
-            date:"01/01/2023"            
-        },
-        {
-            id:"dsfsdxdsf",
-            title:"Astuces pour prendre soin de son coeur éfficacement",
-            categorie:"Cardio",
-            illustrationImage:"",
-            randomColor:"83828286",
-            articleNature:"sante",
-            date:"01/01/2023"            
+            let objet = 
+            {
+                categorie:post.postcategorie,
+                title:post.title,
+                date:post.created.slice(0,10),
+                randomColor:post.randomColor,
+                id:post.id
+            };
+            ArticleDataFormatted.push(objet);
         }
-    ]
 
-   let blogEditor = false;
-
-    
+        ArticleDataFormatted = ArticleDataFormatted;
+    },1500)
 
 </script>
 <section>
@@ -54,7 +36,11 @@
     </div>
 
     <div class="bodyContent">
-       <BodyContent ArticlesData={santeArticlesData}></BodyContent>
+        {#await ArticleDataFormatted }
+            <p>Un instant ça charge</p>
+        {:then Article } 
+            <BodyContent ArticlesData={ArticleDataFormatted}></BodyContent>        
+        {/await}
     </div>
 </section>
 
@@ -64,15 +50,14 @@
         width: 100%;
         display: flex;
         flex-direction: column;
-        padding: 10px 40px;
-        background-color:#ffff;
+        padding: 10px 34px;
+        background-color:#fafafa;
     }
 
     .headerContent
     {
-        /* border: 1px solid; */
         width: 100%;
-        height: 17vh;
+        height: 10vh;
     }
 
     button
@@ -83,14 +68,16 @@
         border: 1px solid #d3d3d34b;
         position: relative;
         border-radius:3px;
-        background:#fafafa /*#cccccc*/;
+        color: #fafafa;
+        background:royalblue /*#cccccc*/;
         cursor: pointer;
        transition: background 0.3s ease-out;
     }
     
-    button:hover
+    button:hover,
+    button:focus
     {
-       background: #f0f0f0;
+       background: #4169e1c9;
        transition: background 0.3s ease-out;
        
     }
