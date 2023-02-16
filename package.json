@@ -25,6 +25,7 @@
 		"marked": "^4.2.12",
 		"pocketbase": "^0.10.0",
 		"svelte-fa": "^3.0.3",
-		"svelte-icons": "^2.1.0"
+		"svelte-icons": "^2.1.0",
+		"zero-md": "^2.4.0"
 	}
 }
