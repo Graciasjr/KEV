@@ -30,14 +30,15 @@
     {
         display: block;
         width: auto;
-        height: 40%;
+        height: 7vh;
     }
 
     .description
     {
         color: #474747;
-        width: 350px;
-        height: 60%;
+        width: 80%;
+        height:10vh;
+        /* border: 1px solid; */
     }
 
 </style>

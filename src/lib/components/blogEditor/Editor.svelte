@@ -1,55 +1,102 @@
 <script>
     import Fa from 'svelte-fa/src/fa.svelte';
     import {faBold, faItalic,faLink,faList,faRotateLeft,faRotateRight,faCaretDown,faImage,faH,faClose,faArrowRight} from '@fortawesome/free-solid-svg-icons'
-    import { marked } from 'marked';
-    import { DOMPurify} from 'isomorphic-dompurify';
     import PocketBase from 'pocketbase';
-    import {randomColor} from "$lib/components/blogEditor/utils/randomColor.svelte";
-
-    $:categorieList = false;
-    $:categorieSelected = '--Categories--';
-    $:articleBoxView = false
-    $:articleTitle='';
-    $:titles='';
-    $:url='';
-    $:source="";
-
-    $:Post ={
-        title:marked(titles),
-        postContent:marked(source),
-        postcategorie:categorieSelected,
-        randomColor:randomColor,
-    }
+    import { marked } from 'marked';
+    import {randomColor} from "$lib/components/utils/randomColor.svelte";
+    import Alert from '$lib/components/animation/Alert.svelte';
     
+    /* UseState */
+
+    export let open=true;
     const pb = new PocketBase('http://127.0.0.1:3000');
+
+    //BlogEditor variable
+        $:categorieList = false;
+        $:categorieSelected = '--Categories--';
+        $:articleBoxView = false;
+        $:articleTitle='';
+        $:titles='';
+        $:saveState = false;
+        $:source="";
+        $:files=[];
+        $:formDatas = new FormData();
+        $:Post ={
+            title:marked(titles),
+            postContent:marked(source),
+            postcategorie:categorieSelected,
+            randomColor:randomColor(),
+        }    
+    //Alert 
+        $:Alerts={
+            alertView:false,
+            alertMessage:'Succès',
+            alertCode:1,
+        }
+
+    // all internal function
+    async function alertError(errorMessage){
+        Alerts.alertView=true;
+        Alerts.alertMessage = await errorMessage;
+        Alerts.alertCode=348;
+        setTimeout(async()=>{
+            Alerts.alertView=false;
+        },3500)
+    }
+
+    async function alertSucces(successMessage){
+        Alerts.alertView=true;
+        Alerts.alertMessage=await successMessage;
+        Alerts.alertCode=115;
+        saveState=true;
+        // const authData =await pb.admins.authWithPassword('graciasdagadgc@gmail.com','Zdp3SE7r5GTKume');
+        const record = await pb.collection('post').create(await formDatas);
+        setTimeout(async()=>{
+            Alerts.alertView=false;
+            saveState=false;
+            reset();
+        },3500)
+        
+    }
+
+    async function basicVerification()
+    {
+        //categorie, titre,image,source
+        //un ternaire en bonne et due forme hihi😋
+        (categorieSelected==='--Categories--')?alertError("Tu dois sélectionner une catégories\n 😋 !!!"):(articleTitle==='')?alertError("Tu dois penser à écrire le titre de l'article \n 😋 !!!"):(files.length==0)?alertError("Les images c'est bon pour la communication visuel, alors mets-en\n 😋 !!! "):alertSucces("Succès, ton blog est publié 😋!!!");
+    }
     // const authData = pb.admins.authWithPassword('graciasdagadgc@gmail.com','Zdp3SE7r5GTKume');
-    let files;
-    const formDatas = new FormData();
-    
+    async function reset(){        
+            Post.title="";
+            Post.postContent="";
+            Post.postcategorie="--Categories--";
+            categorieSelected = '--Categories--';
+            articleTitle = '';
+            source="";           
+            Post.randomColor=randomColor();    
+            formDatas=new FormData();
+        
+    }
+
     async function insertImg(target)
     {
-        // for(let file of targets.files){
-
-        //     formDatas.append('file',file[0]);
-        // }
-        files = target.files[0];
-        
-        setTimeout(async()=>{
-            console.log(files);
-        },2000)
+        files = target.files;
+        const src = URL.createObjectURL(files[0]);
+        let img = `![](${src})`;
+        source =source+"\n"+img;
     }
     
     async function submitPost()
     {
-        
-        // console.log(randomColor);
-        const record = await pb.collection('post').create(Post);
-
- 
+        formDatas.append('title',Post.title);
+        formDatas.append('postContent',Post.postContent);
+        formDatas.append('postcategorie',Post.postcategorie);
+        formDatas.append('image',files[0]);
+        formDatas.append('randomColor',Post.randomColor);
+        basicVerification();          
     }
 
-
-    export let open=true;
+// front: BlogEditor  functions 
     async function selectCategorie(cat){
         categorieSelected = cat
     }
@@ -93,7 +140,7 @@
 
     async function list()
     {
-        let list =`- first list`
+        let list =`- **first list**`
         if(source[0]===" ")
         {
             source =source.slice(1)
@@ -123,12 +170,12 @@
     
     
 </script>
+
 {#if open}
-    
     <section>    
         <div class="editor">
             <div class="min-header">
-                <button class="blog-logo" on:click={submitPost}>Enregistrer</button>
+                <button class="{saveState?"loading-save":"notSave"} blog-logo " on:click={submitPost}></button>
                 <button class="close" on:click={close}>
                     <Fa icon={faClose} size={"1.35x"}></Fa>
                 </button>
@@ -180,10 +227,10 @@
                         <span class="name">Italic</span>
                     </span>
                     <span class="container">
-                        <form enctype="multipart/form-data" on:submit={submitPost}>
-                            <input type="file" id="img" on:change={async(e)=>{
+                        <form enctype="multipart/form-data" method="POST" on:submit={submitPost}>
+                            <input name="files" type="file" id="img" on:change={async(e)=>{
                                 insertImg(e.target)
-                            }}> 
+                            }} accept="image/*" hidden> 
                         </form>                       
                         <button><label for="img"><Fa icon={faImage}></Fa></label></button>                        
                         <span class="name">Image</span>
@@ -196,7 +243,6 @@
                         <button on:click={linked}><Fa icon={faLink}></Fa></button>
                         <span class="name">Lien</span>
                     </span>
-
                 </div>
                 
                 <div class="temporalContent">
@@ -215,16 +261,67 @@
                     <textarea bind:value={source} on:select={(e)=>{}}></textarea>
                 </div>
                 <div class="rigth-panel">
-                    {@html marked(source)}
+                    {@html marked.parse(source)}
+
+                    <style>
+
+                        h2{
+                            /* display:inline-block; */
+                            margin:0px auto;
+                            width:90%;
+                            margin:10px;
+                            text-align:center;
+                        }
+                        img{
+                            width:67%;
+                            height:30vh;
+                            display:block;
+                            object-fit:cover; 
+                            object-position:top;                                                  
+                            margin: 0px auto;
+                            margin-bottom:25px;
+                            border-radius: 5px;
+                            border: 1px solid #ccc;
+                        }
+
+                        a{
+                            color:#41d6e1;
+                            font-weight:bold;
+                            font-size:12px
+                        }
+
+                        ul{
+                            border:1px solid #fafafa;
+                            padding:0 0 0 25px;
+                            margin:5px 0;
+                            width:50%;
+                            background-color:#fafafa;
+                            border-radius:5px;
+                        }
+
+                        ul li{
+                            min-width:100px;
+                            font-size:12px;
+                            /* border:1px solid; */
+                            margin:0;
+                            list-style:disc;
+                            /* font-weight:600; */
+                            color:#41d6e1;
+                        }
+                    </style>
                 </div>
             </div>
         </div>
-        
+        {#if Alerts.alertView}            
+            <div class="alert">
+                <Alert alertMessage={Alerts.alertMessage} alertCode={Alerts.alertCode}></Alert>
+            </div>
+        {/if}
     </section>
 {/if}
 
 <style>
-    
+   
     :root{
         --secondaryButtonColor:#fafafa;
         --secondaryButtonBgColor:#4169e1;
@@ -236,16 +333,15 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        position: absolute;
-        top: 0;
+        position:absolute;
+        top:0;
         left: 0;
         background: #0000000a;
-        z-index: 1;
+        z-index:1;
         transition: all ease-out 0.3s;
     }
 
-    .editor
-    {
+    .editor{
         width: 90%;   
         height:95%;
         display: flex;
@@ -266,6 +362,7 @@
     .blog-logo{
         border: 1px solid #ccc;  
         padding:2px 10px 2px 10px;
+        width: 100px;
         margin-left:10px;
         border-radius:2px;  
         color: var(--secondaryButtonColor);
@@ -278,7 +375,19 @@
     .blog-logo:hover,
     .blog-logo:focus{
         background-color: var(--secondaryButtonHvrBgClr);
+        color:var(--secondaryButtonColor);
     }
+
+    .notSave:before{
+        content:"Enregistrer"
+    }
+
+    .loading-save::before{
+        content:"..."
+    }
+
+    
+
 
     .close{
         border:0px;
@@ -308,8 +417,10 @@
 
     .article-cat input{
         width:90%;
+        font-weight:bold;
         cursor: pointer;
         border:none;
+        font-size: 11px;
         background-color: inherit;
     }
 
@@ -333,6 +444,7 @@
         padding-top: 5px;
         top: 100%;
         width: 100%;
+        font-size: 11px;
         border: 1px solid #cccccc94;
 
     }
@@ -351,7 +463,6 @@
         outline: 1px solid #fafafa;
         background: #e2e0e049;
         border-left: 1px solid /*#9b9a9a94*/ #4169e1;
-        /* transition:border-left ease-out 0.3s; */
     }
     
     .header{
@@ -386,11 +497,6 @@
         height:25px;
         display: flex;
         position: relative;
-    }
-
-    .container:nth-child(4) input
-    {
-        display: none;
     }
 
     .container button{
@@ -476,11 +582,12 @@
 
     .edit-panel
     {
-        /* border: 1px solid #ccc; */
         width: 100%;
-        height: 83vh;
+        height: auto;
         display: flex;
-        overflow: auto;
+        overflow-y: auto;
+        padding: 0px 5px;
+        background:#fff;
 
     }
 
@@ -491,20 +598,20 @@
     }
 
     .edit-panel .left-panel{
-        border: 1px solid;
         width: 50%;
-        height: 99%;
+        height:auto;
     }
 
     .left-panel textarea{
         font-family: sans-serif;
         padding: 10px 0 0 10px;
         width: 100%;
-        height: 100%;
+        min-height:79vh;
         resize: none;
         border: none;
         background:#000;
         color: #fff;
+        border-radius: 5px;
     }
 
     .left-panel textarea::selection{
@@ -516,10 +623,17 @@
         outline: none;
     }
 
-
     .rigth-panel 
     {
+        width: 50%;
+        height: auto;
         padding: 10px 0 0 25px;
-    }
-    
+    }   
+    .alert{
+        width:auto;
+        position: absolute;
+        top:80%;
+        left:80%;
+        
+    } 
 </style>

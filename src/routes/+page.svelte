@@ -11,14 +11,7 @@
 </svelte:head>
 
 <section>
-	
-	<!-- {#if currentPage === "sante"}
-		<Sante></Sante>
-	{:else if currentPage === "cuisine"}
-		<Cuisine></Cuisine>
-	{:else if currentPage === "chretiennete"}
-		<Chretiennete></Chretiennete>
-	{/if} -->
+
 </section>
 
 <style>

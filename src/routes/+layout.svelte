@@ -1,7 +1,8 @@
 <script>
-		import './styles.css';
-		import './Header.svelte'
-		import Header from './Header.svelte';
+	import './styles.css';
+	import './Header.svelte'
+	import Header from './Header.svelte';
+	import Footer from './Footer.svelte';
 </script>
 
 <div class="app">
@@ -9,28 +10,23 @@
 	<main>
 		<slot/>
 	</main>
-
-	
+	<Footer></Footer>	
 </div>
 
 <style>
 	.app
 	{
-		/* border: 1px solid; */
 		position:relative;
-		width: 100%;
-		height: auto;
+		width:100%;
 		display:flex;
 		flex-direction:column;
-		padding-top:35px;
+		margin-top:49px;
 	}
 
 	main
 	{
-		/* border: 1px solid crimson; */
-		/* background-color: #ccc; */
 		width: 100%;
-		height: 100%;
+		min-height: 94vh;
 	}
 	
 </style>

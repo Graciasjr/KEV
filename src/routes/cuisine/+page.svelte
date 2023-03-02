@@ -1,4 +1,5 @@
 <script>
+    export let data;
     import HeaderContent from "../../lib/components/previewer/headerContent.svelte";
     import BodyContent from "../../lib/components/previewer/bodyContent.svelte";
 
@@ -7,41 +8,33 @@
         rubriqueTitle:"Cuisine",
         rubriqueDescription:"The latest and best Foody articles selected by our editorial office"
     }
-    
-    let santeArticlesData =
-    [
-        {
-            id:"dsfsdxdsf",
-            title:"Astuces pour prendre soin de son coeur éfficacement",
-            categorie:"Cardio",
-            illustrationImage:"",
-            randomColor:"83828286",
-            articleNature:"sante",
-            date:"01/01/2023"            
-        },
-        {
-            id:"dsfsdxdsf",
-            title:"Astuces pour prendre soin de son coeur éfficacement",
-            categorie:"Cardio",
-            illustrationImage:"",
-            randomColor:"83828286",
-            articleNature:"sante",
-            date:"01/01/2023"            
-        },
-        {
-            id:"dsfsdxdsf",
-            title:"Astuces pour prendre soin de son coeur éfficacement",
-            categorie:"Cardio",
-            illustrationImage:"",
-            randomColor:"83828286",
-            articleNature:"sante",
-            date:"01/01/2023"            
-        }
-    ]
+    $:cuisineArticlesData = [];
 
-    
+    setTimeout(
+        async()=>{
+        let reverseData = await data.posts.reverse();    
+        for(let post of await reverseData)
+        {
+            let objet = 
+            {
+                categorie:post.postcategorie,
+                title:post.title,
+                date:post.created.slice(0,10),
+                randomColor:post.randomColor,
+                id:post.id
+            };
+            cuisineArticlesData.push(objet);
+        }
+        cuisineArticlesData = cuisineArticlesData;
+    },1500)     
 
 </script>
+
+
+<svelte:head>
+	<title>KEV Cuisine</title>
+	<meta name="description" content="Svelte demo app" />
+</svelte:head>
 
 <section>
     <div class="headerContent">
@@ -49,7 +42,7 @@
     </div>
 
     <div class="bodyContent">
-       <BodyContent ArticlesData={santeArticlesData}></BodyContent>
+       <BodyContent ArticlesData={cuisineArticlesData}></BodyContent>
     </div>
 </section>
 

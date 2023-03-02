@@ -1,16 +1,37 @@
+                    ****    FAIT    *****
+
 -Chercher le rôle de aria-current(fait)
 -utilise les classes pour le css(fait)
--fait du lazy loading quand les données sont introuvables(undefined)
+- importer font-poppins de google fonts(fait)
+- Revoir le header et faire en sorte que le style s'applique aux liens en fonctions de l'url(fait à 100%)
+- gerer l'affichage de list dans le blogEditor et dans le visonneur de blog(fait)
+- revoir peut être le postionnement du titre de l'article pour un postionnement centrer
+    verticalement(fait)
+- Revoir la couleur de fond pour l'affichage à la page de lecture du blog(fait).
+- boutton de suppression d'un article(fait à 100%)
+- faire une footer page(fait 100%)
+- Faire de l'aniamation pour:
+    *le chargement d'article dans la visionneuse(fait 100%)
+    * le chargement d'article dans l'annuaire des article(fait à 100%)
+    *l'enregitrement d'un nouveau blog(fait à 100%);
+- Faire le responsive de blogVisualiser(fait à 100%)
+-Dans blog Editor faire en sorte que si ni la catégorie, ni le titre, ni l'image n'ont été choisi que le blog ne soit pas publié(fait 100%)
+- fonctionnalité de rechargement de la page de l'admin(fait 100%)
+
+
+
+
+                    ****    EN COURS    ****
 - changer la couleur du surlignage quand le text est sélectionné()
-- importer font-poppins de google fonts
 -utiliser un AI API pour la générations automatique d'images illustatif
     exemple:
     * rudalle/kandinski
 
 - créer un route "admin" dans lequel aurait les rôles suivant
-    * editer ses blog avec blog visualiser(fait à 90%)
+    * editer ses blog avec blog visualiser(fait à 100%)
     * s'authentifier avec google
-    * visualiser tout les blogs publié(fait à 70%)
-
-
+    * visualiser tout les blogs publié(fait à 100%)
+- migrer la base de donnée en ligne
+- gerer le dark-theme.
+-refactorisation de l'application et fait la purge
 - ne pas oublier de mettre ce fichier dans le .gitignore

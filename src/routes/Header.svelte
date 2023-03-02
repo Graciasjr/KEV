@@ -1,141 +1,124 @@
 <script>
 	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
-
-	$:linkActived =
-	{
-		sante:"",
-		cuisine:"",
-		chretiennete:""
+	import Fa from 'svelte-fa/src/fa.svelte';
+	import {faMoon,faSun,faArrowLeft} from '@fortawesome/free-solid-svg-icons'
+	
+	$:navLinks = {
+		sante:{
+			name:"Santé",
+			url:"/sante",
+		},
+		cuisine:{
+			name:"Cuisine",
+			url:"/sante",
+		},
+		chretiennete:{
+			name:"Chretienneté",
+			url:"/chretienneté"
+		},
+		admin:{
+			name:"Admin",
+			url:'/admin'
+		}
 	}
-	$:currentPathName = ""
-
-	async function getCurrentPathName()
+	$:navLinksSidepanel = false;
+	
+	async function disableSidePanel()
 	{
-		setTimeout(
-			async()=>
-			{
-				currentPathName = await $page.url.pathname;
-				switch (currentPathName) {
-					case "/sante":
-						linkActived.sante=true;
-						linkActived.cuisine =! linkActived.sante;
-						linkActived.chretiennete =!linkActived.sante;
-						break;
-
-					case "/cuisine":
-						linkActived.cuisine = true;
-						linkActived.chretiennete =!linkActived.cuisine;
-						linkActived.sante =!linkActived.cuisine;
-
-						break;
-
-					case "/chretiennete":
-						linkActived.chretiennete = true;
-						linkActived.sante =!linkActived.chretiennete;
-						linkActived.cuisine =!linkActived.chretiennete;
-						break;
-
-					default:
-						linkActived.sante=true;
-						linkActived.cuisine =! linkActived.sante
-						linkActived.chretiennete =!linkActived.sante;
-					break;	
-				
-				}
-
-			},
-			100
-		)
+		setTimeout(()=>{
+			navLinksSidepanel=false;
+		},300)
 	}
-
-	const adminResquest = async() =>
-	{
-		setTimeout(
-			()=>
-			{
-				($page.url.pathname ==="/admin")?"":"";
-			},
-			1000
-		)
+	async function back(){
+		history.back();
 	}
-
-	// console.log($page.url);
-	adminResquest()
+	
 	
 </script>
 
 <header>
 	<nav>
+		{#if $page.url.pathname === "/"+$page.params.slug}
+		<button class="back" on:click={back}>
+			<Fa icon={faArrowLeft}></Fa>
+		</button>
+		{/if}
 		<div class="logo-content">
 			<span class="logo">KEV</span>
 		</div>
-
-		{#if $page.url.pathname ==="/" || $page.url.pathname === "/sante" || $page.url.pathname === "/cuisine" || $page.url.pathname === "/chretiennete"  }	
-		<div class="navlinks-container">
-			<button class="hamburger" aria-label="Voir le menu">
-				<span></span>
-				<span></span>
-				<span></span>
-			</button>
-
-			<span class="navlinks">
-				<a href="{"/"?"/sante":""}" class="sante {linkActived.sante?"links-active":""} " aria-label="La Page Santé" aria-current="page" on:click={()=>{getCurrentPathName()}}>Santé</a>
-				<a href="/cuisine" class="cuisine {linkActived.cuisine?"links-active":""}" aria-label="La Page Cuisine" aria-current="{$page.url.pathname ==="cuisine"?"page":"undefined"}" on:click={()=>{getCurrentPathName()}}>Cuisine</a>
-				<a href="/chretiennete" class="sante {linkActived.chretiennete?"links-active":""}" aria-label="La Page Chretienneté" aria-current="{$page.url.pathname ==="chretiennete"?"page":"undefined"}" on:click={()=>{getCurrentPathName()}}>Chrétienneté</a>
-			</span>
-		</div>
-		{:else if $page.url.pathname === '/admin'}
+		{#if $page.url.pathname === "/sante" || $page.url.pathname === "/cuisine" || $page.url.pathname === "/chretiennete"  }	
 			<div class="navlinks-container">
-				<button class="hamburger" aria-label="Voir le menu">
+				<button class="hamburger" aria-label="Voir le menu" on:click={()=>{navLinksSidepanel=!navLinksSidepanel}}>
+					<!-- <Fa icon={faHamburger} size={"1.5x"}></Fa> -->
 					<span></span>
 					<span></span>
 					<span></span>
-				</button>
-
-				<span class="navlinks">
-					<!-- <a href="" class="sante {linkActived.sante?"links-active":""} " aria-label="La Page Santé" aria-current="page" on:click={()=>{getCurrentPathName()}}>Mes Posts</a> -->
+				</button>			
+				<span class="navlinks {navLinksSidepanel?'active':'' }">
+					<a href="/sante" class="sante {`${$page.url.pathname==="/sante"?"links-active":""}`} " aria-label="La Page Santé" aria-current="Page" on:click={disableSidePanel}>Santé</a>
+					<a href="/cuisine" class="cuisine {`${$page.url.pathname==="/cuisine"?"links-active":""}`}" aria-label="La Page Cuisine" aria-current="{$page.url.pathname ==="/cuisine"?"Page":""}" on:click={disableSidePanel}>Cuisine</a>
+					<a href="/chretiennete" class="sante {`${$page.url.pathname==="/chretiennete"?"links-active":""}`}" aria-label="La Page Chretienneté" aria-current="{$page.url.pathname ==="/chretiennete"?"Page":""}" on:click={disableSidePanel}>Chrétienneté</a>
 				</span>
 			</div>
 		{/if}
-		<div class="site-theme">		
-				<input type="checkbox" id="check" class="checkbox">	
-				<label for="check">
-					<span class="sliders"></span>
-				</label>			
+			
+		
+		<div class="theme-toggle">
+			<input class="theme-handle" type="checkbox" id="button" checked>
+			<label for="button">
+				<span class="moon">
+					<Fa icon={faMoon} size={"1.2x"} color={"gray"}></Fa>
+				</span>
+				<span class="sun">
+					<Fa icon={faSun} size={"1.2x"} color={"orange"} style={""}></Fa>
+				</span>
+			</label>
 		</div>
+		
 	</nav>		
 </header>
 
 
 
 <style>
-/* import google fonts to make "kev" style look like italic style*/
 	
-	nav
-	{
+	nav{
 		width: 100%;
 		position:fixed;
+		z-index: 2;
 		top:0;
-		background: #ffff;
+		background: #ffffff;
 		display: flex;
+		align-items:center;
+		justify-content: space-between;
 		padding: 7px 37px;
 		box-shadow: inset 0px -1px 1px #c4c4c4;
-		font-family: sans-serif;
 	}
 
-	.logo-content
-	{
+	.back{
+		border: 0px;
+		width: 25px;
+		height: 25px;
+		border-radius: 2px;
+		background-color:inherit;
+		cursor: pointer;
+	}
+	.back:hover,
+	.back:focus{
+		background: #f1f1f1;
+	}
+
+	.logo-content{
 		width: 50px;
-		height:17px;
+		text-align: center;
 		font-size: 18px;
 		font-weight:bold;
+		position: relative;
+		/* border: 1px solid; */
 	}
 
-	.navlinks-container
-	{
-		display: inline-block;
-		margin: 0 auto;
+	.navlinks-container{
+		width: 300px;
 	}
 
 	.navlinks-container .hamburger
@@ -143,12 +126,18 @@
 		display: none;
 	}
 
+	.navlinks{
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+	}
+
 	.navlinks a
 	{
+		width: auto;
 		font-size: 14px;
 		text-decoration: none;
 		color: #7c7c7c;
-		margin-right: 50px;
 		position: relative;
 	}
 
@@ -165,7 +154,7 @@
 		content: "";
 		display: block;
 		position: absolute;
-		top: 100%;
+		top:90%;
 		left: 0;
 		width:95%;
 		transform: scaleX(0);
@@ -181,60 +170,124 @@
 		transform: scaleX(1);
 	}
 
-	.site-theme
-	{
+
+	/*	theme-handler style	*/
+
+	.theme-toggle{
 		display: inline-block;
+		border: 1px solid #ccc;
+		border-radius: 50%;
+		padding: 1px 2px;
 	}
 
-	.site-theme label
-	{
-		display: inline-block;
+	.theme-toggle label{
+		display:flex;
 		position: relative;
-	}
-
-	label .sliders
-	{
-		display:inline-block;
-		width:45px;
-		height: 17px;
-		border: 1px solid #c4c4c4;
-		border-radius: 25px;
-		background: #ffff;
 		cursor: pointer;
 	}
 
-	.site-theme input:checked + label .sliders
-	{
-		background-color: #0a89f121;
-	}
-
-	label .sliders::before
-	{
-		content:"";
-		position: absolute;
-		width: 22px;
-		height: 22px;
-		background: #cacaca;
-		top:-2px;
-		left:0;
-		bottom:10px;
-		border-radius: 50%;
-		box-shadow: 0px 0px 15px #333;
-		transition: all 0.2s ease-out;
-
-	}
-
-	.site-theme input:checked + label .sliders::before
-	{
-		box-shadow: 0px 0px 15px #0a21f15b;
-		transform: translateX(22.9px);
-		transition: transform 0.2s ease-out;
-	}
-
-	.checkbox
+	.theme-handle
 	{
 		display: none;
 	}
 
-	
+	label .moon,
+	label .sun{
+		width:25px;
+		height:25px;
+		text-align: center;
+		padding: 3px 0;
+	}
+
+	.sun{
+		display: none;
+	}
+	.moon{
+		display: block;
+	}
+
+	input.theme-handle:checked + label .sun
+	{
+		display: block;
+		/* box-shadow: 0px 0px 7px #ffa600da; */
+	}
+
+	input.theme-handle:checked + label .moon{
+		display: none;
+	}
+
+
+
+	/*	MOBILE DEVICE	*/
+	@media only screen and (max-width:545px)
+	{
+		nav{
+			padding: 12px 37px;
+		}
+
+		.logo-content{
+			order: 2;
+		}		
+
+		.navlinks-container{
+			order: 1;
+			width: auto;
+		}
+
+		.navlinks-container .hamburger{
+			display: block;
+			width: 27px;
+			height: 25px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			gap: 4.2px;
+			cursor: pointer;
+			border:0px;
+			background: transparent;
+		}
+
+		.hamburger span{
+			display: block;
+			width: 20px;
+			height: 1px;
+			border: 0.5px solid #333;
+			border-radius: 20px;
+		}
+
+		.navlinks{
+			padding: 25px 10px 0 32px;
+			width:auto;
+			height: 120vh;
+			border-right: 1px solid #ccc;
+			position: absolute;
+			top:100%;
+			left:-100%;
+			gap:20px;
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: flex-start;
+			background:#fff;
+			transition:left 0.4s ease-out;
+		}
+
+		.navlinks a{
+			width: auto;
+			height:3vh;
+			margin-right:50px;
+		}
+		.navlinks a::after{
+			top: 100%;
+		}
+
+		.theme-toggle{
+			order:3;
+		}
+
+		.active{
+			left:0;
+			transition:left 0.4s ease-out;
+		}
+	}
 </style>

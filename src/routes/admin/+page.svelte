@@ -1,16 +1,18 @@
 <script>
     export let data;
-    import HeaderContent from "$lib/components/previewer/headerContent.svelte";
     import BodyContent from "$lib/components/previewer/bodyContent.svelte";
     import Editor from "$lib/components/blogEditor/Editor.svelte";
-  import { is_empty } from "svelte/internal";
-    
+    import Fa from 'svelte-fa/src/fa.svelte';
+    import {faRefresh} from '@fortawesome/free-solid-svg-icons';
+    import Pocketbase from 'pocketbase';
+    const pb = new Pocketbase('http://127.0.0.1:3000');
+
     let blogEditor = false;
     $:ArticleDataFormatted = [];
 
-    setTimeout(
-        async()=>{
-        for(let post of data.posts.reverse())
+    async function fetcher (){
+        let reverseData = await data.posts.reverse();
+        for(let post of await reverseData)
         {
             let objet = 
             {
@@ -22,26 +24,42 @@
             };
             ArticleDataFormatted.push(objet);
         }
-
         ArticleDataFormatted = ArticleDataFormatted;
-    },1500)
+    }
+    
+    async function refresh()
+    {
+        ArticleDataFormatted = [];
+        setTimeout(async()=>{
+            const postCollection = await pb.collection('post').getFullList();
+            data ={
+                posts: await JSON.parse(JSON.stringify(postCollection))
+            }
+            fetcher();
+        },1000)
+    }
+
+    setTimeout(
+        async()=>{
+            fetcher();        
+    },Math.floor(Math.random()*1250))
 
 </script>
-<section>
+<section>   
     <Editor bind:open={blogEditor}></Editor>
     <div class="headerContent">
         <button on:click={()=>{blogEditor=true}}>
             Nouveau
         </button>
+        <button on:click={refresh}>
+            <Fa icon={faRefresh}></Fa>
+        </button>
+    </div>    
+ 
+    <div class="bodyContent">
+        <BodyContent ArticlesData={ArticleDataFormatted}></BodyContent>       
     </div>
 
-    <div class="bodyContent">
-        {#await ArticleDataFormatted }
-            <p>Un instant ça charge</p>
-        {:then Article } 
-            <BodyContent ArticlesData={ArticleDataFormatted}></BodyContent>        
-        {/await}
-    </div>
 </section>
 
 <style>
@@ -60,20 +78,26 @@
         height: 10vh;
     }
 
-    button
+    .headerContent button
     {
         width:auto;
-        height:22px;
-        padding: 3px 5px;
+        padding:2px 7px;
         border: 1px solid #d3d3d34b;
-        position: relative;
         border-radius:3px;
         color: #fafafa;
-        background:royalblue /*#cccccc*/;
+        font-size: 10px;
+        font-weight: bold;
+        background:royalblue;
         cursor: pointer;
        transition: background 0.3s ease-out;
     }
     
+    .bodyContent{
+        width: 100%;
+        height: 100%;
+        padding-left: 27px;
+    }
+
     button:hover,
     button:focus
     {
@@ -83,39 +107,5 @@
     }
 
 
-    /* .new-article button{
-        width: auto;
-        height: auto;
-        background: transparent;
-        border-color: transparent;
-        cursor: pointer;
-    }
-
-    .new-article button::before
-    {
-      content: "";
-      display: inline-block;
-      width: 4px;
-      height: 19px;
-      position: relative;
-      top: 1px;
-      background: #a8a7a7;
-      border-radius: 5px;
-      border: none;
-    }
-
-    .new-article button::after
-    {
-        content: "";
-        position: absolute;
-        display: inline-block;
-        width: 20px;
-        height: 4px;
-        left:4px;
-        border-radius: 5px;
-        transform: translateY(8.5px);
-        background: #a8a7a7;
-    }
-
-     */
+    
 </style>
