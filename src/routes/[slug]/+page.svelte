@@ -1,5 +1,4 @@
 <script>
-   import { is_empty } from "svelte/internal";
    export let data;   
    $: mapData = {
       Article:{
@@ -19,17 +18,16 @@
         mapData = await data;
    },Math.floor(Math.random()*1750))
 
-   let fileUrlHead ="http://127.0.0.1:3000/api/files/"
-
+   let fileUrlHead ="https://sweet-juice.pockethost.io/api/files/";
 </script>
 
 <article>
    {#await mapData.Article then dat }
-      {#if dat.title!="" && dat.collectionName!==""}         
-         <header style="background:url('{fileUrlHead+dat.collectionName+"/"+dat.id+"/"+dat.image}'); background-repeat:no-repeat; background-size:cover; background-position-y:top; color:hsl({dat.randomColor} , 71%, 68%);" >
-            <span class="title">
-               {@html dat.title}
-            </span>      
+      {#if dat.title!="" && dat.collectionName!==""}      
+         <div class="title" style="color:hsl({dat.randomColor} , 71%, 68%);">
+            {@html dat.title}
+         </div>     
+         <header style="background:url('{fileUrlHead+dat.collectionName+"/"+dat.id+"/"+dat.image}'); background-repeat:no-repeat; background-size:cover; background-position-y:top;" >
             <div class="footer">
                <span class="date" style="color:#000;font-weight:bolder; text-decoration:underline; cursor:pointer;">
                   {@html dat.created.slice(0,10)}
@@ -52,8 +50,6 @@
                
                text-align:center;
                margin:0;
-               padding:2px;
-               font-family:sans-serif;
             }
 
             p{
@@ -162,7 +158,7 @@
    article
    {
       width:100%;
-      min-height:100vh;
+      /* min-height:100vh; */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -172,11 +168,10 @@
  
    }
 
-   header{
- 
+   header{ 
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-end;
       padding: 10px 2px 0 2px;
       border-radius: 5px 5px 0 0;
       width:570px;
@@ -186,19 +181,17 @@
    }
 
    .title{
-      width: 70%;
-      border: 1px solid;
-      position: relative;
-      background: #fafafa;
-      top:40%;
-      z-index:0;
-      left:17%;
+      width:570px;
+      margin-bottom:5px;
+      /* border: 1px solid; */
    }
 
    .footer{
       display: flex;
       justify-content: space-between;
       margin-bottom: 2px;
+      
+      
    }
    .categorie{
       width:auto;
@@ -231,7 +224,7 @@
    /* MOBILE DEVICE */
 
    @media only screen and (max-width:625px){
-      header,section{
+      header,section,.title{
          width:100%;
       }
    }

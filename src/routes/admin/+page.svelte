@@ -5,11 +5,11 @@
     import Fa from 'svelte-fa/src/fa.svelte';
     import {faRefresh} from '@fortawesome/free-solid-svg-icons';
     import Pocketbase from 'pocketbase';
-    const pb = new Pocketbase('http://127.0.0.1:3000');
+    const pb = new Pocketbase('https://sweet-juice.pockethost.io');
 
     let blogEditor = false;
     $:ArticleDataFormatted = [];
-
+    $:refresh=false;
     async function fetcher (){
         let reverseData = await data.posts.reverse();
         for(let post of await reverseData)
@@ -27,15 +27,17 @@
         ArticleDataFormatted = ArticleDataFormatted;
     }
     
-    async function refresh()
+    async function handleRefresh()
     {
         ArticleDataFormatted = [];
+        refresh=true;
         setTimeout(async()=>{
             const postCollection = await pb.collection('post').getFullList();
             data ={
                 posts: await JSON.parse(JSON.stringify(postCollection))
             }
             fetcher();
+            refresh=false;
         },1000)
     }
 
@@ -51,8 +53,12 @@
         <button on:click={()=>{blogEditor=true}}>
             Nouveau
         </button>
-        <button on:click={refresh}>
-            <Fa icon={faRefresh}></Fa>
+        <button on:click={handleRefresh}>
+            {#if refresh==false}
+            <Fa icon={faRefresh}></Fa> 
+            {:else if refresh==true}               
+            <Fa icon={faRefresh} spin></Fa> 
+            {/if}
         </button>
     </div>    
  

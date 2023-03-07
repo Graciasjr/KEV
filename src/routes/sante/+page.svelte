@@ -2,7 +2,7 @@
     export let data
     import HeaderContent from "../../lib/components/previewer/headerContent.svelte";
     import BodyContent from "../../lib/components/previewer/bodyContent.svelte";
-
+    
     let pageHeader =
     {
         rubriqueTitle:"Santé",
@@ -26,6 +26,7 @@
             santeArticlesData.push(objet);
         }
         santeArticlesData = santeArticlesData;
+        
     },1500)    
 
 </script>

@@ -31,7 +31,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background:#202952/*#1a2453*/;
+        background:#202952/*#02d5fa*/;
         font-size: 13px;    
         font-weight: bold;
         color: #fafafa;
@@ -39,7 +39,7 @@
 
     .le-blog{
         width: auto;
-        padding: 0 3px;
+        padding: 0 10px;
         border: 1px solid;
         position:relative;
     }
@@ -50,7 +50,7 @@
         text-align: center;
         padding: 2px;
         border-radius:50px;
-        background: royalblue;
+        background: /*royalblue*/#02d5fa;
         bottom: 12px;
         left:10px;
         transform: rotate(15deg);
@@ -64,5 +64,19 @@
     .jr a{
         color: inherit;
         text-decoration: none;
+    }
+    .jr a:hover{
+        text-decoration:underline;
+    }
+
+    @media only screen and (max-width:455px){
+        footer{
+            padding-top: 10px;
+            height: 20vh;
+            flex-direction: column;
+            align-items: center;
+            justify-content:center;
+            gap:17px;
+        }
     }
 </style>

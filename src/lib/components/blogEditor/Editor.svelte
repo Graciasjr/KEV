@@ -9,7 +9,7 @@
     /* UseState */
 
     export let open=true;
-    const pb = new PocketBase('http://127.0.0.1:3000');
+    const pb = new PocketBase('https://sweet-juice.pockethost.io');
 
     //BlogEditor variable
         $:categorieList = false;

@@ -1,11 +1,13 @@
 import Pocketbase from 'pocketbase'
-const pb = new Pocketbase('http://127.0.0.1:3000');
-const authData =pb.admins.authWithPassword('graciasdagadgc@gmail.com','Zdp3SE7r5GTKume');
+const pb = new Pocketbase('https://sweet-juice.pockethost.io');
+// https://sweet-juice.pockethost.io
 
-export async function load ({params})
-{
+export async function load ({params}){
+    try {
+        const authData = await pb.admins.authWithPassword('graciasdagadgc@gmail.com','Dgccompany1243');        
+    } catch (error) {}
     const record = await pb.collection('post').getOne(`${params.slug}`);
-    const Article= await record
+    const Article = await record
     
     return {
         Article

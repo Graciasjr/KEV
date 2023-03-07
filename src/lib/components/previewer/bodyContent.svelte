@@ -10,7 +10,7 @@
     
     async function deleteArticle(id){
         deleteStatus=true;
-        const pb = new Pocketbase('http://127.0.0.1:3000');
+        const pb = new Pocketbase('https://sweet-juice.pockethost.io');
         await pb.collection('post').delete(`${id}`);
         setTimeout(async()=>{
             data = await  pb.collection('post').getFullList();
