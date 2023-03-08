@@ -15,3 +15,4 @@ src/lib/server/pb_data/logs.db
 src/lib/server/pb_data/logs.db-shm
 src/lib/server/pb_data/logs.db-wal
 task.txt
+KEV/
