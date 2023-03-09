@@ -1,7 +1,7 @@
 <script>
     export let data;
-    import HeaderContent from "../../lib/components/previewer/headerContent.svelte";
-    import BodyContent from "../../lib/components/previewer/bodyContent.svelte";
+    import HeaderContent from "$lib/components/previewer/headerContent.svelte";
+    import BodyContent from "$lib/components/previewer/bodyContent.svelte";
 
     let pageHeader ={
         rubriqueTitle:"Chrétienneté",
