@@ -1,6 +1,6 @@
 import adapter from '@sveltejs/adapter-vercel';
 import sveltePreprocess from 'svelte-preprocess';
-import {mdsvex} from 'mdsvex'
+// import {mdsvex} from 'mdsvex'
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -11,10 +11,10 @@ const config = {
 	preprocess:
 	[
 		sveltePreprocess(),
-		mdsvex(
-			{
-				extensions:['.md']
-			})
+		// mdsvex(
+		// 	{
+		// 		extensions:['.md']
+		// 	})
 	],
 };
 
