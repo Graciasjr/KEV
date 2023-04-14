@@ -11,7 +11,7 @@
             Made with 💖 by
         </span>
         <span class="jr">
-            <a  href="mailto:graciasdagadgc@gmail.com" target="_blank" mailto=''>Gracias_Jr</a>
+            <a  href="https://graciasjr.github.io/Gracias_jr" target="_blank">Gracias_Jr</a>
         </span>
     </div>
 

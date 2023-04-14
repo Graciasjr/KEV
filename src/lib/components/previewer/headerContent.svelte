@@ -19,26 +19,28 @@
     {
         /* background-color: #fff; */
         width: 100%;
-        height: 17vh;
+        height: auto;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding: 7px 0;
+        padding: 5px 0;
+        gap: 3px;
     }
 
     .title
     {
         display: block;
         width: auto;
-        height: 7vh;
+        height: auto;
+        padding: 5px 0;
     }
 
     .description
     {
         color: #474747;
         width: 80%;
-        height:10vh;
-        /* border: 1px solid; */
+        height:auto;
+        padding: 7px 3px;
     }
 
 </style>

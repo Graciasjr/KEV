@@ -180,5 +180,11 @@
         top: 45%;
         left:40%;
     }
+
+    @media only screen and (max-width:450px){
+        .body{
+            justify-content: center;
+        }
+    }
     
 </style>

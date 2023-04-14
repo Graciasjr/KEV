@@ -51,7 +51,8 @@
         width: 100%;
         display: flex;
         flex-direction: column;
-        padding: 20px 70px;
+        gap: 5px;
+        padding: 20px 40px;
         background-color:#ffff;
     }
 </style>
