@@ -1,7 +1,6 @@
 <script>
     import '$lib/app.css'
     import Loader from "$lib/components/animation/Loader.svelte";
-    import { page } from "$app/stores";
     import Fa from 'svelte-fa/src/fa.svelte';
     import {faTrash,faEye,faHeart,faShareFromSquare} from '@fortawesome/free-solid-svg-icons';
     import Pocketbase from 'pocketbase';

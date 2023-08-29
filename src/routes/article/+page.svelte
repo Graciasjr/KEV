@@ -13,18 +13,6 @@
     setTimeout(
         async()=>{
             const datas = JSON.parse(await data.posts)
-        for(let post of await datas)
-        {
-            let objet = 
-            {
-                categorie:post.postcategorie,
-                title:post.title,
-                date:post.created.slice(0,10),
-                randomColor:post.randomColor,
-                id:post.id
-            };
-            cuisineArticlesData.push(objet);
-        }
         cuisineArticlesData = datas;
     },1500)     
 

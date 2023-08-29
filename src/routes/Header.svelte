@@ -38,8 +38,8 @@
 					<span></span>
 				</button>			
 				<span class="navlinks w-full flex justify-between {navLinksSidepanel?'active':'' }">
-					<a href="/annonce" class="{`${$page.url.pathname==="/annonce"?"links-active text-[16px] font-bold ":""}`} " aria-label="La Page Santé" aria-current="Page" on:click={disableSidePanel}>Annonces 📢</a>
-					<a href="/article" class="cuisine {`${$page.url.pathname==="/article"?"links-active text-[16px] font-bold ":""}`}" aria-label="La Page Cuisine" aria-current="{$page.url.pathname ==="/article"?"Page":""}" on:click={disableSidePanel}>Articles 📜</a>
+					<a href="/annonce" class="{`${$page.url.pathname==="/annonce"?"links-active text-[16px] font-bold ":""}`} " aria-label="La Page Annonce" aria-current="Page" on:click={disableSidePanel}>Annonces 📢</a>
+					<a href="/article" class="{`${$page.url.pathname==="/article"?"links-active text-[16px] font-bold ":""}`}" aria-label="La Page Article" aria-current="{$page.url.pathname ==="/article"?"Page":""}" on:click={disableSidePanel}>Articles 📜</a>
 					<!-- <a href="/chretiennete" class="sante {`${$page.url.pathname==="/chretiennete"?"links-active":""}`}" aria-label="La Page Chretienneté" aria-current="{$page.url.pathname ==="/chretiennete"?"Page":""}" on:click={disableSidePanel}>Chrétienneté</a> -->
 				</span>
 			</div>
