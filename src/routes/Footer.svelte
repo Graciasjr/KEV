@@ -31,7 +31,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background:#202952/*#02d5fa*/;
+        background:#202952;
         font-size: 13px;    
         font-weight: bold;
         color: #fafafa;
