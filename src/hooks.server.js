@@ -3,7 +3,7 @@ import PocketBase from 'pocketbase';
 export const handle = async({event,resolve}) =>{
     
     // const url = 'http://127.0.0.1:3001';
-    const url ='https://shaggy-glass.pockethost.io';
+    const url ='https://sweet-juice.pockethost.io';
     event.locals.pb= new PocketBase(url);
     event.locals.pb.authStore.loadFromCookie(event.request.headers.get('cookie') || '');
 
