@@ -190,9 +190,9 @@
                     </button>
                     {#if categorieList}                        
                         <div class="categorie-list">
-                            <button on:click={()=>{selectCategorie('Santé')}}>Santé</button>
-                            <button on:click={()=>{selectCategorie('Cuisine')}}>Cuisine</button>
-                            <button on:click={()=>{selectCategorie('Chrétienneté')}}>Chretienneté</button>
+                            <button on:click={()=>{selectCategorie('article')}}>Santé</button>
+                            <button on:click={()=>{selectCategorie('annonce')}}>Cuisine</button>
+                            <!-- <button on:click={()=>{selectCategorie('Chrétienneté')}}>Chretienneté</button> -->
                         </div>
                     {/if}
                     </button>

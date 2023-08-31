@@ -20,8 +20,8 @@
         console.log(getData)
    },Math.floor(Math.random()*1750))
 
-   // let fileUrlHead ="https://sweet-juice.pockethost.io/api/files/";
-   let fileUrlHead ="http://127.0.0.1:3001/api/files/";
+   let fileUrlHead ="https://sweet-juice.pockethost.io/api/files/";
+   // let fileUrlHead ="http://127.0.0.1:3001/api/files/";
 </script>
 
 <article>
